@@ -13,26 +13,23 @@ class ChatAgent(BaseAgent):
         self.model = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
 
     def run(self, user_question: str, history: list):
-        # 🔍 RAG 검색
+        # RAG 검색
         docs = self.vector_agent.run(user_question)
 
-        # 📜 최근 대화 이력 포맷
+        # 최근 대화 이력 포맷
         history_text = "\n".join(
             [f"{h['role']}: {h['content']}" for h in history[-8:]]
         )
 
-        # 🎯 프롬프트
+        # 프롬프트
         template = """
-        너는 서강대학교 로욜라 도서관 도우미야.
-        아래 컨텍스트와 이전 대화를 참고해서, 필요한 정보만 답변해.
-        불확실하면 "제공된 정보로는 알 수 없습니다."라고 답해.
-
-        출력 규칙:
-        1. 항상 `### 🔍 상세 설명` 섹션 출력 (제목은 생략).
-        2. 답변이 너무 길면 `### ✏️ 핵심 요약`도 출력.
-        3. 항상 `### 🔗 관련 링크` 섹션 출력 (HTML `<a>` 태그).
-
-        ---
+        다음의 컨텍스트를 활용해서 질문에 답변해줘
+        - 질문에 곧바로 핵심 답변을 해줘 (불필요한 도입 없이)
+        - 다만 어투는 친절하게 해줘
+        - 설명이 길어질 경우(약 10~12줄 이상) 마지막에 간단히 요약해줘
+        - 참고할 링크가 있으면 알려주고, 출력은 <a> 태그를 사용해줘
+        - 순서가 있는 데이터는 줄바꿈으로 정리해줘
+        
         이전 대화: {history}
 
         컨텍스트: {context}
