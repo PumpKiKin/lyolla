@@ -1,40 +1,39 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from .api import process_question
+
 import json
 
 def chat_page(request):
     return render(request, "chatbot_app/chat.html")
 
-
+@csrf_exempt # 발표용은 주석 해제
 def chat_api(request):
     if request.method == "POST":
         data = json.loads(request.body)
         q = data.get("question", "")
 
-        # 세션에서 히스토리 불러오기 (없으면 초기화)
         history = request.session.get("chat_history", [])
 
-        # 백엔드에서 LLM 호출
         result = process_question(q, history)
 
-        # 히스토리에 추가
+        # 세션에 저장
         history.append({"role": "user", "content": q})
         history.append({"role": "assistant", "content": result["answer"]})
-        request.session["chat_history"] = history  # 세션 저장
+        request.session["chat_history"] = history
 
         return JsonResponse({
             "question": q,
             "answer": result["answer"],
             "sources": result.get("sources", []),
-            "history": history[-10:],  # 최근 10개만 프론트로
+            "history": history[-10:],  # 최근 10개만 전달
         })
 
 @csrf_exempt
 def reset_chat(request):
-    if request.method == "POST":
-        request.session["chat_history"] = []  # 세션 비우기
-        return JsonResponse({"status": "ok"})
-    return JsonResponse({"status": "error"}, status=400)
+    """대화 초기화"""
+    request.session["chat_history"] = []
+    return JsonResponse({"status": "ok"})
