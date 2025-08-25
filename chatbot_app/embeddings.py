@@ -60,4 +60,4 @@ def build_faiss_index():
     all_documents = json_to_documents(json_files)
     smaller_documents = chunk_documents(all_documents)
     save_to_vector_store(smaller_documents)
-    print(f"✅ FAISS 인덱스가 {DB_PATH} 에 저장되었습니다.")
+    print(f"FAISS 인덱스가 {DB_PATH} 에 저장되었습니다.")
