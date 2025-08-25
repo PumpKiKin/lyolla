@@ -1,14 +1,16 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from .api import process_question
+
 import json
 
 def chat_page(request):
     return render(request, "chatbot_app/chat.html")
 
-
+@csrf_exempt # 발표용
 def chat_api(request):
     if request.method == "POST":
         data = json.loads(request.body)
