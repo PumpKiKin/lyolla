@@ -4,12 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const userInput = document.getElementById("user-input");
     const resetBtn = document.getElementById("reset-chat");
 
-    // ✅ 마크다운 파서 + 보안 라이브러리 사용
+    // 마크다운 파서 + 보안 라이브러리 사용
     function renderMarkdown(text) {
         return DOMPurify.sanitize(marked.parse(text));
     }
 
-    // ✅ 말풍선 생성 함수
+    // 말풍선 생성 함수
     function addMessage(text, isUser = false) {
         const msg = document.createElement("div");
         msg.classList.add("message", isUser ? "user-message" : "bot-message");
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    // ✅ 대화 초기화 버튼
+    // 대화 초기화 버튼
     resetBtn.addEventListener("click", async () => {
         chatMessages.innerHTML = "";  // 화면 비우기
 
@@ -40,11 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (err) {
             console.error("Reset error:", err);
         }
-
-        addMessage("🗑️ 대화 내역이 초기화되었습니다.", false);
+        // addMessage("🗑️ 대화 내역이 초기화되었습니다.", false);
     });
 
-    // ✅ 폼 전송 이벤트
+    // 폼 전송 이벤트
     chatForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const text = userInput.value.trim();
@@ -82,17 +81,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (data.sources && data.sources.length > 0) {
                     const links = data.sources.map((s, i) => {
-                        return `[출처 ${i + 1}](${s})`; // ✅ 마크다운 링크로 변환
+                        return `[출처 ${i + 1}](${s})`; // 마크다운 링크로 변환
                     }).join(" ");
 
                     addMessage(`\n---\n**출처:** ${links}`, false);
                 }
             } else {
-                addMessage("⚠️ 답변을 불러올 수 없습니다.", false);
+                addMessage("답변을 불러올 수 없습니다.", false);
             }
         } catch (err) {
             chatMessages.removeChild(loading);
-            addMessage("⚠️ 오류 발생: " + err.message, false);
+            addMessage("오류 발생: " + err.message, false);
         }
     });
 });
