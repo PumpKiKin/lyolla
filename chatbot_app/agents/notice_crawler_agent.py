@@ -5,7 +5,7 @@ from pathlib import Path
 import pandas as pd
 import re
 import json
-
+from datetime import datetime, timedelta
 
 class NoticeCrawlerAgent:
     BASE_URL = "https://library.sogang.ac.kr"
@@ -46,9 +46,14 @@ class NoticeCrawlerAgent:
                 author = cols[2].get_text(strip=True)
                 date = cols[3].get_text(strip=True)
                 views = cols[4].get_text(strip=True)
-
-                # 2024 또는 2025만 가져오기
-                if not (date.startswith("2024") or date.startswith("2025")):
+                            
+                # 최근 1년 날짜 계산하기
+                today = datetime.today()
+                one_year_ago = today - timedelta(days=365)
+                date_obj = datetime.strptime(date, "%Y-%m-%d")
+                
+                # 최근 1년이 아니면 크롤링 중단
+                if date_obj < one_year_ago:
                     stop_crawling = True
                     break
 
@@ -125,7 +130,7 @@ class NoticeCrawlerAgent:
     # === JSON 저장 ===
     def create_notices_json(self):
         """공지사항 목록 + 상세 내용을 JSON으로 저장"""
-        print("📢 공지사항 목록 가져오는 중...")
+        print("공지사항 목록 가져오는 중...")
         notice_df = self.fetch_notices()
 
         if notice_df.empty:
@@ -136,7 +141,7 @@ class NoticeCrawlerAgent:
         for _, row in notice_df.iterrows():
             url = row["링크"]
             try:
-                print(f"➡️ 상세 내용 가져오는 중: {url}")
+                print(f"내용 가져오는 중: {url}")
                 notice_detail = self.fetch_notice_detail(url)
 
                 notice_data = {
@@ -149,18 +154,18 @@ class NoticeCrawlerAgent:
                 all_notices.append(notice_data)
 
             except Exception as e:
-                print(f"❌ 상세 내용 가져오기 실패: {url}, 오류: {e}")
+                print(f"❌ 내용 가져오기 실패: {url}, 오류: {e}")
                 continue
 
         with open(self.output_file, 'w', encoding='utf-8') as f:
             json.dump(all_notices, f, ensure_ascii=False, indent=4)
-        print(f"✅ 공지사항 데이터가 '{self.output_file}'에 저장되었습니다.")
+        print(f"공지사항 데이터가 '{self.output_file}'에 저장되었습니다.")
 
     # === 에이전트 실행 ===
     def run(self):
         """Agent 실행"""
         self.create_notices_json()
-        return f"✅ 공지사항 데이터가 {self.output_file} 에 저장 완료되었습니다."
+        return f"공지사항 데이터가 {self.output_file} 에 저장 완료되었습니다."
 
 
 if __name__ == "__main__":
