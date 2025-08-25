@@ -81,9 +81,11 @@ body {
 /* 입력창 */
 .chat-form {
   display: flex;
-  padding: 12px;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
   border-top: 1px solid #ddd;
-  background: #fafafa;
+  background: #fff;
 }
 
 .chat-form input {
@@ -109,6 +111,41 @@ body {
 .chat-form button:hover {
   background: #a00028;
 }
+.reset-btn,
+.send-btn {
+  height: 42px;                /* 입력창 높이에 맞춤 */
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;                /* 아이콘/텍스트 중앙 정렬 */
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;          /* 텍스트 줄바꿈 방지 */
+  transition: background 0.2s ease;
+}
+
+/* 초기화 버튼 */
+.reset-btn {
+  background: #ddd;
+  color: #333;
+  border: none;
+}
+.reset-btn:hover {
+  background: #bbb;
+}
+
+/* 보내기 버튼 */
+.send-btn {
+  background: #800020;
+  color: #fff;
+  border: none;
+}
+.send-btn:hover {
+  background: #a00028;
+}
+
 
 /* 마크다운 스타일 */
 .bot-message h1, .bot-message h2, .bot-message h3 {

@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatForm = document.getElementById("chat-form");
     const chatMessages = document.getElementById("chat-messages");
     const userInput = document.getElementById("user-input");
+    const resetBtn = document.getElementById("reset-chat");
 
     // ✅ 마크다운 파서 + 보안 라이브러리 사용
     function renderMarkdown(text) {
@@ -24,6 +25,24 @@ document.addEventListener("DOMContentLoaded", () => {
         chatMessages.appendChild(msg);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
+
+    // ✅ 대화 초기화 버튼
+    resetBtn.addEventListener("click", async () => {
+        chatMessages.innerHTML = "";  // 화면 비우기
+
+        try {
+            await fetch("/chat/reset/", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+                }
+            });
+        } catch (err) {
+            console.error("Reset error:", err);
+        }
+
+        addMessage("🗑️ 대화 내역이 초기화되었습니다.", false);
+    });
 
     // ✅ 폼 전송 이벤트
     chatForm.addEventListener("submit", async (e) => {

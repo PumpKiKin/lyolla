@@ -22,8 +22,9 @@
 
     <form id="chat-form" class="chat-form">
       {% csrf_token %}
-      <input id="user-input" type="text" placeholder="질문을 입력하세요..." autocomplete="off" />
-      <button type="submit">보내기</button>
+      <button id="reset-chat" type="button" class="reset-btn">🗑 초기화</button>
+      <input id="user-input" type="text" placeholder="질문을 입력하세요..." />
+      <button type="submit" class="send-btn">보내기</button>
     </form>
   </div>
 
