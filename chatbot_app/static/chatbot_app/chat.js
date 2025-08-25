@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatMessages = document.getElementById("chat-messages");
     const userInput = document.getElementById("user-input");
     const resetBtn = document.getElementById("reset-chat");
+    const resetNotification = document.getElementById("reset-notification");
 
     // 마크다운 파서 + 보안 라이브러리 사용
     function renderMarkdown(text) {
@@ -29,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 대화 초기화 버튼
     resetBtn.addEventListener("click", async () => {
         chatMessages.innerHTML = "";  // 화면 비우기
-
+        
         try {
             await fetch("/chat/reset/", {
                 method: "POST",
@@ -37,10 +38,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
                 }
             });
+
+            // 알림 메시지 표시
+            resetNotification.classList.add("show");
+
+            // 1초 후에 알림 메시지 숨기기
+            setTimeout(() => {
+                resetNotification.classList.remove("show");
+            }, 1000);
+
         } catch (err) {
             console.error("Reset error:", err);
+            // 오류 발생 시 다른 방식으로 알림을 표시할 수 있습니다.
         }
-        // addMessage("🗑️ 대화 내역이 초기화되었습니다.", false);
     });
 
     // 폼 전송 이벤트
@@ -79,14 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (data.answer) {
                 addMessage(data.answer, false);
-
-                if (data.sources && data.sources.length > 0) {
-                    const links = data.sources.map((s, i) => {
-                        return `[출처 ${i + 1}](${s})`; // 마크다운 링크로 변환
-                    }).join(" ");
-
-                    addMessage(`\n---\n**출처:** ${links}`, false);
-                }
             } else {
                 addMessage("답변을 불러올 수 없습니다.", false);
             }

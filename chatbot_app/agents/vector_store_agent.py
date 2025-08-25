@@ -106,10 +106,11 @@ class VectorStoreAgent:
         smaller_docs = self._chunk_documents(all_documents)
         vector_store = FAISS.from_documents(smaller_docs, embedding=self.embeddings)
         vector_store.save_local(str(DB_PATH))
+
         # 매니페스트 저장
         cur_manifest = self._current_manifest(json_files)
         MANIFEST.write_text(json.dumps(cur_manifest, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"✅ FAISS 인덱스가 {DB_PATH} 에 저장되었습니다.")
+        print(f" FAISS 인덱스가 {DB_PATH} 에 저장되었습니다.")
 
     # -------------------------------
     # Index 보장 (무결성/원본변경/경합 대응)
