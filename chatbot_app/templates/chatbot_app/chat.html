@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로욜라 도서관 챗봇</title>
+  <link rel="stylesheet" href="{% static 'chatbot_app/style.css' %}">
+  
+  <!-- 마크다운 / 보안 -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+</head>
+<body>
+  <div class="chat-container">
+    <header class="chat-header">
+      <h1>📚 로욜라 도서관 챗봇</h1>
+    </header>
+
+    <main id="chat-messages" class="chat-messages"></main>
+
+    <form id="chat-form" class="chat-form">
+      {% csrf_token %}
+      <input id="user-input" type="text" placeholder="질문을 입력하세요..." autocomplete="off" />
+      <button type="submit">보내기</button>
+    </form>
+  </div>
+
+  <script src="{% static 'chatbot_app/chat.js' %}"></script>
+</body>
+</html>

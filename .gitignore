@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+*.manifest
+*.spec
+
+# Virtual environment
+.env
+.venv/
+venv/
+ENV/
+env/
+*.env
+
+# Poetry / pip
+poetry.lock
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Django
+db.sqlite3
+/media/
+staticfiles/
+*.log
+
+# VSCode / PyCharm / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Node / Frontend
+node_modules/
+dist/
+build/
+*.cache
+*.tsbuildinfo
+
+# FAISS index / vector DB
+faiss_index/
+*.faiss
