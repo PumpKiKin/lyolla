@@ -5,7 +5,8 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 import os
-from dotenv import load_dotenv   # ✅ 추가
+from dotenv import load_dotenv
+from .embeddings import build_faiss_index
 
 # .env 로드
 load_dotenv()
@@ -14,6 +15,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DB_PATH = BASE_DIR / "faiss_index"
 
 def load_vectorstore():
+    # ✅ 벡터스토어가 없으면 자동 생성
+    if not DB_PATH.exists():
+        print("⚠️ FAISS 인덱스가 없어 새로 생성합니다...")
+        build_faiss_index()
+        
     embeddings = HuggingFaceEmbeddings(
         model_name="jhgan/ko-sbert-nli",
         model_kwargs={"device": "cpu"})
