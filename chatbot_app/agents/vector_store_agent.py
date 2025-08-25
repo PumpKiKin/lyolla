@@ -76,7 +76,7 @@ class VectorStoreAgent(BaseAgent):
         smaller_docs = self._chunk_documents(all_documents)
         vector_store = FAISS.from_documents(smaller_docs, embedding=self.embeddings)
         vector_store.save_local(str(DB_PATH))
-        print(f"✅ FAISS 인덱스가 {DB_PATH} 에 저장되었습니다.")
+        print(f"FAISS 인덱스가 {DB_PATH} 에 저장되었습니다.")
 
     # -------------------------------
     # Agent 실행
