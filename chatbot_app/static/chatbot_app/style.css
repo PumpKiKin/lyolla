@@ -101,7 +101,7 @@ body {
 }
 
 .chat-form button {
-  margin-left: 10px;
+  /* margin-left: 10px; */
   padding: 0 20px;
   background: #800020;
   color: white;
