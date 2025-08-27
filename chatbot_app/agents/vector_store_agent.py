@@ -19,7 +19,7 @@ class VectorStoreAgent:
         self.embeddings = HuggingFaceEmbeddings(
             model_name="jhgan/ko-sbert-nli", model_kwargs={"device": "cpu"}
         )
-        self._ensure_index()  # ✅ 폴더/파일/원본 변경까지 모두 점검
+        self._ensure_index()  # 폴더/파일/원본 변경까지 모두 점검
         self.db = FAISS.load_local(
             str(DB_PATH), self.embeddings, allow_dangerous_deserialization=True
         )
