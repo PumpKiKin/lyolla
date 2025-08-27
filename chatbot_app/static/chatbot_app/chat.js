@@ -24,7 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         chatMessages.appendChild(msg);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        // chatMessages.scrollTop = chatMessages.scrollHeight;
+        chatMessages.scrollTop = msg.offsetTop - 80;
     }
 
     // 대화 초기화 버튼
@@ -72,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         `;
         chatMessages.appendChild(loading);
+        chatMessages.scrollTop = chatMessages.scrollHeight; 
 
         try {
             const response = await fetch("http://127.0.0.1:8000/chat/api/", { // 발표용
