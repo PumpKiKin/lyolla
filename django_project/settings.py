@@ -122,7 +122,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "chatbot_app" / "static"]
+
+STATICFILES_DIRS = [
+    BASE_DIR / "chatbot_app" / "static",  # 개발용 static 폴더
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"   # 배포 시 collectstatic 결과물 저장
 
 
 # Default primary key field type
