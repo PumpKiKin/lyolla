@@ -21,6 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             // 챗봇 메시지는 마크다운 처리
             msg.innerHTML = renderMarkdown(text);
+
+            // 모든 링크를 새 탭에서 열리도록 강제
+            msg.querySelectorAll("a").forEach(link => {
+                link.setAttribute("target", "_blank");
+                link.setAttribute("rel", "noopener noreferrer");
+            });
         }
 
         chatMessages.appendChild(msg);
