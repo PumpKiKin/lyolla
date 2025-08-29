@@ -154,7 +154,7 @@ class NoticeCrawlerAgent:
                 all_notices.append(notice_data)
 
             except Exception as e:
-                print(f"❌ 내용 가져오기 실패: {url}, 오류: {e}")
+                print(f"내용 가져오기 실패: {url}, 오류: {e}")
                 continue
 
         with open(self.output_file, 'w', encoding='utf-8') as f:

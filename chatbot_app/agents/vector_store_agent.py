@@ -1,4 +1,3 @@
-# ./chatbot_app/agents/vector_store_agent.py
 from pathlib import Path
 import json, hashlib, time
 from typing import List
@@ -9,7 +8,7 @@ from langchain_community.vectorstores import FAISS
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 DB_PATH = BASE_DIR / "faiss_index"
-INDEX_FILES = ["index.faiss", "index.pkl"]      # LangChain FAISS 기본 산출물
+INDEX_FILES = ["index.faiss", "index.pkl"]
 MANIFEST = DB_PATH / "manifest.json"
 
 class VectorStoreAgent:
@@ -19,7 +18,7 @@ class VectorStoreAgent:
         self.embeddings = HuggingFaceEmbeddings(
             model_name="jhgan/ko-sbert-nli", model_kwargs={"device": "cpu"}
         )
-        self._ensure_index()  # ✅ 폴더/파일/원본 변경까지 모두 점검
+        self._ensure_index()  # 변경 사항 모두 점검
         self.db = FAISS.load_local(
             str(DB_PATH), self.embeddings, allow_dangerous_deserialization=True
         )
@@ -144,10 +143,10 @@ class VectorStoreAgent:
                 cur_manifest = self._current_manifest(json_files)
                 if not self._manifest_matches(cur_manifest):
                     lock.touch(exist_ok=True)
-                    print("♻️ 원본/설정이 바뀌어 인덱스를 재생성합니다.")
+                    print("원본/설정이 바뀌어 인덱스를 재생성합니다.")
                     self.build_index()
         except Exception as e:
-            print(f"⚠️ 인덱스 확인/생성 중 오류 발생: {e}\n→ 재생성 시도")
+            print(f"인덱스 확인/생성 중 오류 발생: {e}\n→ 재생성 시도")
             try:
                 lock.touch(exist_ok=True)
                 self.build_index()
