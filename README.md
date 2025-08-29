@@ -1,4 +1,4 @@
-# 📚 로욜라 도서관 챗봇 '룔라'
+# 로욜라 도서관 챗봇 '룔라'
 
 서강대학교 로욜라 도서관 웹페이지와 공지사항 데이터를 기반으로 한 **챗봇 서비스**입니다.\
 Django + LangChain + FAISS + Google Generative AI(Gemini)를 활용해 구현했습니다.\
@@ -7,13 +7,13 @@ Django + LangChain + FAISS + Google Generative AI(Gemini)를 활용해 구현했
 
 ---
 
-## 🚀 기능 소개
-- 🤖 **FAQ 챗봇**: 도서관 이용 안내, 시설 정보, 공지사항 관련 내용 자동 응답
-- 🔎 **RAG (Retrieval-Augmented Generation)**: FAISS 벡터 DB 기반 검색 후 LLM 응답
+## 기능 소개
+- **FAQ 챗봇**: 도서관 이용 안내, 시설 정보, 공지사항 관련 내용 자동 응답
+- **RAG (Retrieval-Augmented Generation)**: FAISS 벡터 DB 기반 검색 후 LLM 응답
 
 ---
 
-## 🛠️ 기술 스택
+## 기술 스택
 - **Backend**: Django, Django REST Framework
 - **Frontend**: HTML, CSS, JavaScript (Vanilla)
 - **Vector DB**: FAISS
@@ -22,13 +22,17 @@ Django + LangChain + FAISS + Google Generative AI(Gemini)를 활용해 구현했
 
 ---
 
-## 📂 디렉토리 구조
+## 디렉토리 구조
 ```
 lyolla
 ├── chatbot_app/               # Django 앱 (API + View + Template)
-│   ├── static/chatbot_app/    # CSS, JS
-│   │   ├── chat.js
-│   │   └── style.css
+│   ├── static/
+│   │   ├── chatbot_app/    # CSS, JS
+│   │   │   ├── chat.js
+│   │   │   └── style.css
+│   │   ├── fonts/
+│   │   │   ├── SOGANG_UNIVERSITY_for_mac.otf
+│   │   │   └── SOGANG_UNIVERSITY_for_windows.ttf
 │   ├── templates/chatbot_app/ # HTML 템플릿
 │   │   └── chat.html
 │   ├── api.py                 # LLM 연결 및 RAG 처리 로직
@@ -48,7 +52,7 @@ lyolla
 
 ---
 
-## ⚙️ 설치 및 실행 방법
+## 설치 및 실행 방법
 
 ### 1. 저장소 클론
 ```bash
@@ -70,14 +74,13 @@ poetry shell
 
 ```
 GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY
+DJANGO_SECRET_KEY=YOUR_DJANGO_SECRET_KEY
 ```
 
-### 4. 데이터 벡터화 (최초 1회만 실행)
+### 4. DB 스키마 업데이트(최초 1회만 실행)
 
 ```bash
-poetry run python manage.py shell
->>> from chatbot_app.embeddings import build_faiss_index
->>> build_faiss_index()
+poetry run python manage.py migrate
 ```
 
 ### 5. 서버 실행
@@ -90,17 +93,17 @@ poetry run python manage.py runserver
 
 ---
 
-## 💻 프로젝트 정보
+## 프로젝트 정보
 * **2025-하계 탐구 공동체 "객체 지향 인공지능 에이전트 개발 방법론"**
   * 서강대학교 교수학습센터 주관
 
 * **프로젝트 개발** : **펌키킨** 팀
   * 서강대학교 국어국문학과 4학년 김현서
-    * 📧 **이메일**: neulbokim@sogang.ac.kr
+    * **이메일**: neulbokim@sogang.ac.kr
   * 서강대학교 국어국문학과 3학년 최윤지
-    * 📧 **이메일**: yunji3711@naver.com
+    * **이메일**: yunji3711@naver.com
 * **지도 교수**: 서강대학교 메타버스전문대학원 김태훈 전임교수
-  * 📧 **이메일**: taehoonkim@sogang.ac.kr
-  * 🌐 **홈페이지** : https://mimic-lab.com/
+  * **이메일**: taehoonkim@sogang.ac.kr
+  * **홈페이지** : https://mimic-lab.com/
 
 ---
