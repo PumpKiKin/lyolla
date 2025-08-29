@@ -3,7 +3,7 @@ from .vector_store_agent import VectorStoreAgent
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain.schema.output_parser import StrOutputParser
-
+from datetime import datetime
 
 class ChatAgent(BaseAgent):
     """대화 관리 + LLM 응답 담당"""
@@ -21,8 +21,11 @@ class ChatAgent(BaseAgent):
             [f"{h['role']}: {h['content']}" for h in history[-8:]]
         )
 
+        today = datetime.now().strftime("%Y-%m-%d")
+
         # 프롬프트
         template = """
+        오늘은 {today} 입니다.
         다음의 컨텍스트를 활용해서 질문에 답변해줘
         - 질문에 곧바로 핵심 정보로 답변해줘
         - 어투는 친절하게 해줘
@@ -45,7 +48,7 @@ class ChatAgent(BaseAgent):
         chain = prompt | self.model | StrOutputParser()
 
         response = chain.invoke(
-            {"question": user_question, "context": docs, "history": history_text}
+            {"today": today, "question": user_question, "context": docs, "history": history_text}
         )
 
         return {
