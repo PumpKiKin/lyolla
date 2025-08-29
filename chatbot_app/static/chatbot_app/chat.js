@@ -82,8 +82,8 @@ document.addEventListener("DOMContentLoaded", () => {
         chatMessages.scrollTop = chatMessages.scrollHeight; 
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/chat/api/", { // 발표용
-            // const response = await fetch("/chat/api/", {
+            // const response = await fetch("http://127.0.0.1:8000/chat/api/", { // 개발용
+            const response = await fetch("/chat/api/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
